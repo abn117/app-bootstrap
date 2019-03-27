@@ -3,6 +3,7 @@
 
 ### Setup info
 1.  `source .env`
+2.  `docker network create ${REVERSE_PROXY_NETWORK}`
 2.  `docker-compose up -d`
 3.  Go to `http://traefik.docker.devweb`
 
