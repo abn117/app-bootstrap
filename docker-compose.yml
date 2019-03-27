@@ -31,5 +31,5 @@ services:
             - ${REVERSE_PROXY_NETWORK}
         labels: 
             - "traefik.enable=true"
-            - "traefik.port=80"
+            - "traefik.port=8080"
             - "traefik.frontend.rule=Host:traefik.${BASE_DOMAIN}"
