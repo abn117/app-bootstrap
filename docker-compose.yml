@@ -1,0 +1,35 @@
+version: "3"
+
+networks: 
+    reverse-proxy:
+        external:
+            name: ${REVERSE_PR}
+services:
+
+    portainer:
+        container_name: portainer.${BASE_DOMAIN}
+        image: portainer/portainer
+        command: --no-auth -H unix:///var/run/docker.sock
+        volumes: 
+            - /var/run/docker.sock:/var/run/docker.sock
+        networks:
+            - ${REVERSE_PR}
+        labels:
+            - "traefik.enable=true"
+            - "traefik.port=9000"
+            - "traefik.frontend.rule=Host:portainer.${BASE_DOMAIN}"
+
+    traefik:
+        container_name: traefik.${BASE_DOMAIN}
+        image: traefik:latest
+        ports:
+            - "80:80"
+        volumes:
+            - ./cache/traefik/traefik.toml:/etc/traefik/traefik.toml
+            - /var/run/docker.sock:/var/run/docker.sock
+        networks: 
+            - ${REVERSE_PR}
+        labels: 
+            - "traefik.enable=true"
+            - "traefik.port=8080"
+            - "traefik.frontend.rule=Host:traefik.${BASE_DOMAIN}"
