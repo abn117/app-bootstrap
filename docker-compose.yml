@@ -4,8 +4,8 @@ networks:
     reverse-proxy:
         external:
             name: ${REVERSE_PROXY_NETWORK}
-services:
 
+services:
     portainer:
         container_name: portainer.${BASE_DOMAIN}
         image: portainer/portainer
